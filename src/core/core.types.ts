@@ -16,8 +16,8 @@ export interface AggregateRoot {
 }
 
 export interface HttpService {
-  get<TResponse>(id: number): Promise<Nullable<TResponse>>
-  enumerate<TResponse>(): Promise<TResponse>
+  get<TResponse>(url: string, id: number): Promise<Nullable<TResponse>>
+  enumerate<TResponse>(url: string): Promise<TResponse>
 }
 
 export interface LogService {
