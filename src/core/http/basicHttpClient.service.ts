@@ -1,14 +1,14 @@
 import { HttpService } from "@nestjs/axios";
-import { Inject, Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { AxiosResponse } from "axios";
 import { firstValueFrom, lastValueFrom } from "rxjs";
-import { LogService, HttpClient as HttpClient, Nullable } from "../core.types";
+import { LogService, HttpClient as HttpClient, Nullable, Providers } from "../core.types";
 
 @Injectable()
 export class BasicHttpClient implements HttpClient {
   constructor(
     private readonly httpService: HttpService,
-    @Inject(nameof<LogService>()) private logService: LogService
+    @Inject(Providers.LogService) private logService: LogService
   ) {}
 
   async get<TResponse>(url: string, id: number): Promise<Nullable<TResponse>> {

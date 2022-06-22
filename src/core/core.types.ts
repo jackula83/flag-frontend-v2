@@ -14,3 +14,8 @@ export interface LogService {
   info(message: string): void
   error(error: (Error | string)): void
 }
+
+export enum Providers {
+  LogService,
+  HttpClient
+}
