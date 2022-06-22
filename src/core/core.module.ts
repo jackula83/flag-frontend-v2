@@ -1,7 +1,8 @@
 import { HttpModule } from "@nestjs/axios";
 import { Global, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { LogService } from './core.types';
+import { LogService, HttpClient } from './core.types';
+import { BasicHttpClient } from "./http/basicHttpClient.service";
 import { SentryService } from "./logging/sentry.service";
 
 @Global()
@@ -13,6 +14,9 @@ import { SentryService } from "./logging/sentry.service";
   providers: [{
     provide: nameof<LogService>(),
     useClass: SentryService
+  },{
+    provide: nameof<HttpClient>(),
+    useClass: BasicHttpClient
   }],
 })
 

@@ -2,7 +2,7 @@ import { HttpService } from "@nestjs/axios";
 import { Inject, Injectable } from "@nestjs/common";
 import { AxiosResponse } from "axios";
 import { firstValueFrom, lastValueFrom } from "rxjs";
-import { LogService, HttpService as HttpClient, Nullable } from "../core.types";
+import { LogService, HttpClient as HttpClient, Nullable } from "../core.types";
 
 @Injectable()
 export class BasicHttpClient implements HttpClient {

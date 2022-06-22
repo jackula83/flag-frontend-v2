@@ -5,17 +5,7 @@ export type EntityModel<T> = {
   Item: T
 }
 
-export interface AggregateRoot {
-  id: number,
-  uuid: string,
-  deleteFlag: boolean,
-  createdAt: Date,
-  updatedAt?: Date,
-  createdBy?: string,
-  updatedBy?: string
-}
-
-export interface HttpService {
+export interface HttpClient {
   get<TResponse>(url: string, id: number): Promise<Nullable<TResponse>>
   enumerate<TResponse>(url: string): Promise<TResponse>
 }
