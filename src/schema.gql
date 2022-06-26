@@ -1,0 +1,29 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Flag {
+  alias: String
+  createdAt: DateTime!
+  createdBy: String
+  deleteFlag: Boolean!
+  description: String!
+  id: ID!
+  isEnabled: Boolean!
+  name: String!
+  updatedAt: DateTime
+  updatedBy: String
+  uuid: String!
+}
+
+type Query {
+  flag(id: Int!): Flag
+  flags: [Flag!]!
+  hello: String!
+  test: Flag!
+}

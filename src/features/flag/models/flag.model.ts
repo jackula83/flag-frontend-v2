@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { AggregateRoot } from "src/core/models/aggregateRoot";
+import { AggregateRoot } from "../../../core/models/aggregateRoot";
 import { ServeValue } from './serveValue.model';
 
 
@@ -12,12 +12,12 @@ export class Flag extends AggregateRoot {
   @Field()
   description: string;
   
-  @Field()
+  @Field({nullable: true})
   alias: string;
   
   @Field({defaultValue: false})
   isEnabled: boolean;
 
-  @Field(type => ServeValue)
-  defaultServeValue: ServeValue;
+  // @Field(type => ServeValue)
+  // defaultServeValue: ServeValue;
 }

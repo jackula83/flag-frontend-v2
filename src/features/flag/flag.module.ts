@@ -1,12 +1,13 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { CoreModule } from "src/core/core.module";
 import { FlagResolver } from './flag.resolvers';
 import { FlagService } from './flag.service';
+import { CoreModule } from '../../core/core.module';
 
 @Module({
   imports: [ConfigModule, CoreModule],
-  providers: [FlagResolver, FlagService]
+providers: [FlagResolver, FlagService],
+  exports: [FlagResolver, FlagService]
 })
 
 export class FlagModule {}

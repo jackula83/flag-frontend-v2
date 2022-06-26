@@ -1,12 +1,11 @@
-import * as _ from 'ts-nameof';
 import * as Sentry from '@sentry/node';
 import { Injectable } from "@nestjs/common";
-import { LogService } from './../core.types';
 import { ConsoleStyle } from '../console/consoleStyles';
 import { ConfigService } from '@nestjs/config';
+import { LoggingService } from './logging.service';
 
 @Injectable()
-export class SentryService implements LogService {
+export class SentryService implements LoggingService {
   constructor(private configService: ConfigService) {
     Sentry.init({
       dsn: `https://${configService.get<string>('SENTRY_DSN')}.ingest.sentry.io/6387150`,
@@ -30,12 +29,12 @@ export class SentryService implements LogService {
   }
 
   private getInfoLog = (message: string): [string, string] => [
-      `SentryLog(${nameof(this.info)})`,
+      `SentryLog(${global.nameof(this.info)})`,
      `${ConsoleStyle.FgYellow}${message}${ConsoleStyle.Reset}`
     ];
 
   private getErrorLog = (message: string): [string, string] => [
-    `SentryLog(${nameof(this.error)})`,
+    `SentryLog(${global.nameof(this.error)})`,
     `${ConsoleStyle.FgRed}${message}${ConsoleStyle.Reset}`
   ]
 

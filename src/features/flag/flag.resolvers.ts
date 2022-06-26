@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from "@nestjs/graphql";
+import { Args, Int, Query, Resolver } from "@nestjs/graphql";
 import { Flag } from './models/flag.model';
 import { FlagService } from './flag.service';
 
@@ -11,8 +11,21 @@ export class FlagResolver {
     return this.flagService.enumerate();
   }
 
+  @Query(returns => Flag, { name: 'flag', nullable: true})
+  async flag(@Args('id', {type: () => Int}) id: number) {
+    const result = await this.flagService.get(id);
+    return result;
+  }
+
+  @Query(returns => String)
+  async hello() {
+    return "Hello world!"
+  }
+
   @Query(returns => Flag)
-  async flag(@Args('id') id: number): Promise<Flag> {
-    return await this.flagService.get(id);
+  async test() {
+    const flag = new Flag();
+    flag.alias = "abc";
+    return flag;
   }
 }

@@ -1,7 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { EntityModel, HttpClient, Nullable } from './../../core/core.types';
+import { EntityModel, Nullable } from '../../core/core.types';
 import { ConfigService } from '@nestjs/config';
 import { Flag } from './models/flag.model';
+import { HttpClient } from "src/core/http/httpClient.service";
 
 @Injectable()
 export class FlagService {
@@ -10,7 +11,7 @@ export class FlagService {
 
   constructor(
     private readonly configService: ConfigService,
-    @Inject(nameof<HttpClient>()) private readonly httpClient: HttpClient
+    private readonly httpClient: HttpClient
   ) {
     const baseUrl = this.configService.get<string>('FLAGSERVICE_URL');
     const path = this.configService.get<string>('FLAGSERVICE_PATH_FLAG');

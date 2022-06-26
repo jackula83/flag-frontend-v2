@@ -1,23 +1,24 @@
 import { HttpModule } from "@nestjs/axios";
-import { Global, Module } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { Providers } from "./core.types";
 import { BasicHttpClient } from "./http/basicHttpClient.service";
+import { HttpClient } from "./http/httpClient.service";
+import { LoggingService } from "./logging/logging.service";
 import { SentryService } from "./logging/sentry.service";
 
-@Global()
 @Module({
   imports: [
-  ConfigModule,
+    ConfigModule,
     HttpModule
   ],
   providers: [{
-    provide: Providers.LogService.toString(),
+    provide: LoggingService,
     useClass: SentryService
   },{
-    provide: Providers.HttpClient.toString(),
+    provide: HttpClient,
     useClass: BasicHttpClient
   }],
+  exports: [ConfigModule, HttpModule, LoggingService, HttpClient]
 })
 
 export class CoreModule {}
