@@ -12,12 +12,12 @@ export class Flag extends AggregateRoot {
   @Field()
   description: string;
   
-  @Field({nullable: true})
+  @Field()
   alias: string;
   
   @Field({defaultValue: false})
   isEnabled: boolean;
 
-  // @Field(type => ServeValue)
-  // defaultServeValue: ServeValue;
+  @Field(type => ServeValue)
+  defaultServeValue: ServeValue;
 }

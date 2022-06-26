@@ -7,13 +7,13 @@ export class FlagResolver {
   constructor(private readonly flagService: FlagService) {}
 
   @Query(returns => [Flag])
-  async flags(): Promise<Flag[]> {
+  async flags() {
     return this.flagService.enumerate();
   }
 
-  @Query(returns => Flag, { name: 'flag', nullable: true})
+  @Query(returns => Flag)
   async flag(@Args('id', {type: () => Int}) id: number) {
-    const result = await this.flagService.get(id);
+    const result = this.flagService.get(id);
     return result;
   }
 

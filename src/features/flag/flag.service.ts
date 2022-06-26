@@ -20,11 +20,11 @@ export class FlagService {
 
   public async enumerate(): Promise<Flag[]> {
     const results = await this.httpClient.enumerate<EntityModel<Flag>>(this.url);
-    return results?.Items;
+    return results?.items;
   }
 
   public async get(id: number): Promise<Nullable<Flag>> {
     const results = await this.httpClient.get<EntityModel<Flag>>(this.url, id);
-    return results?.Item;
+    return results?.item;
   }
 }

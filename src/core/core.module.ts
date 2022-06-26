@@ -5,10 +5,11 @@ import { BasicHttpClient } from "./http/basicHttpClient.service";
 import { HttpClient } from "./http/httpClient.service";
 import { LoggingService } from "./logging/logging.service";
 import { SentryService } from "./logging/sentry.service";
+import { DateScalar } from './scalars/date.scalars';
 
 @Module({
   imports: [
-    ConfigModule,
+  ConfigModule,
     HttpModule
   ],
   providers: [{
@@ -17,7 +18,8 @@ import { SentryService } from "./logging/sentry.service";
   },{
     provide: HttpClient,
     useClass: BasicHttpClient
-  }],
+  },
+  DateScalar],
   exports: [ConfigModule, HttpModule, LoggingService, HttpClient]
 })
 
