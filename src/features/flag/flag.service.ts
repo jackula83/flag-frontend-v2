@@ -1,8 +1,8 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { EntityModel, Nullable } from '../../core/core.types';
 import { ConfigService } from '@nestjs/config';
 import { Flag } from './models/flag.model';
-import { HttpClient } from "src/core/http/httpClient.service";
+import { HttpClient } from "../../core/http/httpClient.service";
 
 @Injectable()
 export class FlagService {
