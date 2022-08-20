@@ -9,7 +9,7 @@ import { Nullable } from '../core.types';
 export abstract class HttpClient {
   constructor(
     private readonly httpService: HttpService,
-    private logService: LoggingService
+    private readonly logService: LoggingService
   ) {}
 
   async get<TResponse>(url: string, id: number): Promise<Nullable<TResponse>> {

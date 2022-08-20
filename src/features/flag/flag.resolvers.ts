@@ -16,16 +16,4 @@ export class FlagResolver {
     const result = this.flagService.get(id);
     return result;
   }
-
-  @Query(returns => String)
-  async hello() {
-    return "Hello world!"
-  }
-
-  @Query(returns => Flag)
-  async test() {
-    const flag = new Flag();
-    flag.alias = "abc";
-    return flag;
-  }
 }
