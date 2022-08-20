@@ -13,9 +13,12 @@ export class FlagService {
     private readonly configService: ConfigService,
     private readonly httpClient: HttpClient
   ) {
-    const baseUrl = this.configService.get<string>('FLAGSERVICE_URL');
-    const path = this.configService.get<string>('FLAGSERVICE_PATH_FLAG');
-    this.url = `${baseUrl}/${path}`;
+    const flagServiceUrl = process.env.FlagService__Url 
+      ?? this.configService.get<string>('FLAGSERVICE_URL');
+    const flagServicePort = process.env.FlagService__Port
+      ?? this.configService.get<string>('FLAGSERVICE_PORT');
+    const baseUrl = `http://${flagServiceUrl}:${flagServicePort}/api`;
+    this.url = `${baseUrl}/flagEntity`;
   }
 
   public async enumerate(): Promise<Flag[]> {

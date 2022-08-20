@@ -8,7 +8,7 @@ import { LoggingService } from './logging.service';
 export class SentryService implements LoggingService {
   constructor(private configService: ConfigService) {
     Sentry.init({
-      dsn: `https://${configService.get<string>('SENTRY_DSN')}.ingest.sentry.io/6387150`,
+      dsn: `https://7fc7fabfc588442bb79f87503976795b@o408624.ingest.sentry.io/6387150`,
       tracesSampleRate: 1.0,
     })
   }

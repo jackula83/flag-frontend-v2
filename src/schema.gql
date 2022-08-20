@@ -23,8 +23,6 @@ type Flag {
 type Query {
   flag(id: Int!): Flag!
   flags: [Flag!]!
-  hello: String!
-  test: Flag!
 }
 
 type ServeValue {

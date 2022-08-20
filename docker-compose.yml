@@ -1,0 +1,52 @@
+version: '3'
+services:
+  sqlserver:
+    image: 'mcr.microsoft.com/mssql/server:2019-latest'
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password1
+      - MSSQL_PID=Developer
+    ports:
+      - 1433:1433
+    volumes:
+      - ./sql/data:/var/opt/mssql/data
+      - ./sql/log:/var/opt/mssql/log
+      - ./sql/secrets:/var/opt/mssql/secrets
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    hostname: 'rabbit-host'
+    # name: 'rabbit-dev-container'
+    environment:
+      - RABBITMQ_DEFAULT_USER=RabbitMQ_user
+      - RABBITMQ_DEFAULT_PASS=RabbitMQ_pass
+    ports:
+      - 5672:5672
+      - 15672:15672
+  flag-service-api:
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    image: 'jackula83/flag-service-dev:latest'
+    ports:
+      - 5000:5000
+    environment:
+    # this is for testing only, sub with your env vars ${} for production
+      - Database__Server=host.docker.internal
+      - Database__Port=1433
+      - Database__Username=sa
+      - Database__Password=Password1
+      - Database__Name=FlagServiceDB
+      - RabbitMQ__HostName=host.docker.internal
+      - RabbitMQ__UserName=RabbitMQ_user
+      - RabbitMQ__Password=RabbitMQ_pass
+  flag-bff:
+    depends_on:
+      - flag-service-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    environment:
+      - FlagService__Url=host.docker.internal
+      - FlagService__Port=5000
