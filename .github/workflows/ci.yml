@@ -21,6 +21,7 @@ jobs:
         file: Dockerfile.test
 
   docker:
+    needs: test
     runs-on: ubuntu-latest
     environment: public
 
