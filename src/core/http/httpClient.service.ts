@@ -18,6 +18,13 @@ export abstract class HttpClient {
     this.handleAnyErrors(res);
     return res?.data;
   }
+
+  async post<TResponse>(url: string, data: any): Promise<Nullable<TResponse>> {
+    const obs = this.httpService.post<TResponse>(`${url}`, data);
+    const res = await firstValueFrom(obs);
+    this.handleAnyErrors(res);
+    return res?.data;
+  }
   
   async enumerate<TResponse>(url: string): Promise<TResponse> {
     const obs = this.httpService.get<TResponse>(`${url}`);

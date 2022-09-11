@@ -1,4 +1,4 @@
-import { Args, Int, Query, Resolver } from "@nestjs/graphql";
+import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Flag } from './models/flag.model';
 import { FlagService } from './flag.service';
 
@@ -14,6 +14,12 @@ export class FlagResolver {
   @Query(returns => Flag)
   async flag(@Args('id', {type: () => Int}) id: number) {
     const result = this.flagService.get(id);
+    return result;
+  }
+
+  @Mutation(returns => Flag)
+  async toggle(@Args('id', {type: () => Int}) id: number) {
+    const result = this.flagService.toggle(id);
     return result;
   }
 }
