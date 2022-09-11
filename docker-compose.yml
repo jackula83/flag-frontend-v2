@@ -26,7 +26,7 @@ services:
     depends_on:
       - sqlserver
       - rabbitmq
-    image: 'jackula83/flag-service-dev:latest'
+    image: 'jackula83/flag-service-dev'
     ports:
       - 5000:5000
     environment:
@@ -39,14 +39,14 @@ services:
       - RabbitMQ__HostName=host.docker.internal
       - RabbitMQ__UserName=RabbitMQ_user
       - RabbitMQ__Password=RabbitMQ_pass
-  flag-bff:
-    depends_on:
-      - flag-service-api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 4000:4000
-    environment:
-      - FlagService__Url=host.docker.internal
-      - FlagService__Port=5000
+  # flag-bff:
+  #   depends_on:
+  #     - flag-service-api
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 4000:4000
+  #   environment:
+  #     - FlagService__Url=host.docker.internal
+  #     - FlagService__Port=5000

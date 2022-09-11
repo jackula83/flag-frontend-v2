@@ -20,6 +20,10 @@ type Flag {
   uuid: String!
 }
 
+type Mutation {
+  toggle(id: Int!): Flag!
+}
+
 type Query {
   flag(id: Int!): Flag!
   flags: [Flag!]!
