@@ -1,25 +1,28 @@
 import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Flag } from './models/flag.model';
-import { FlagService } from './flag.service';
+import { CommandBus, QueryBus } from "@nestjs/cqrs";
+import { FlagQuery } from './cqrs/flag.query';
+import { FlagToggleCommand } from './cqrs/flagToggle.command';
 
 @Resolver(of => Flag)
 export class FlagResolver {
-  constructor(private readonly flagService: FlagService) {}
+  constructor(
+    private readonly queryBus: QueryBus,
+    private readonly commandBus: CommandBus
+  ) {}
 
   @Query(returns => [Flag])
   async flags() {
-    return this.flagService.enumerate();
+    return this.queryBus.execute(new FlagQuery());
   }
 
   @Query(returns => Flag)
   async flag(@Args('id', {type: () => Int}) id: number) {
-    const result = this.flagService.get(id);
-    return result;
+    return this.queryBus.execute(new FlagQuery(id));
   }
 
   @Mutation(returns => Flag)
   async toggle(@Args('id', {type: () => Int}) id: number) {
-    const result = this.flagService.toggle(id);
-    return result;
+    return this.commandBus.execute(new FlagToggleCommand(id));
   }
 }

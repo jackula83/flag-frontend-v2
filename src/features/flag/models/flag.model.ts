@@ -1,10 +1,10 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { AggregateRoot } from "../../../core/models/aggregateRoot";
+import { Entity } from "../../../core/models/entity";
 import { ServeValue } from './serveValue.model';
 
 
 @ObjectType()
-export class Flag extends AggregateRoot {
+export class Flag extends Entity {
 
   @Field()
   name: string;
