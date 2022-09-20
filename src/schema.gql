@@ -20,13 +20,35 @@ type Flag {
   uuid: String!
 }
 
+type Log {
+  createdAt: Date!
+  createdBy: String
+  deleteFlag: Boolean!
+  id: ID!
+  message: String!
+  source: String!
+  type: String!
+  updatedAt: Date
+  updatedBy: String
+  uuid: String!
+}
+
+input LogDto {
+  message: String!
+  source: String!
+  type: String!
+}
+
 type Mutation {
-  toggle(id: Int!): Flag!
+  addLog(input: LogDto!): Log!
+  toggle(id: Float!): Flag!
 }
 
 type Query {
-  flag(id: Int!): Flag!
+  flag(id: Float!): Flag!
   flags: [Flag!]!
+  log(id: Float!): Log!
+  logs: [Log!]!
 }
 
 type ServeValue {

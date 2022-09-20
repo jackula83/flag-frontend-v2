@@ -3,14 +3,14 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
 import { uuid4 } from '@sentry/utils';
 import { HttpClient } from '../../../core/http/httpClient.service';
-import { EntityModel } from "../../../core/core.types";
 import { LoggingService } from "../../../core/logging/logging.service";
 import { MockHttpClient } from "../../../fakes/mockHttpClient";
 import { MockLoggingService } from "../../../fakes/mockLoggingService";
 import { Flag } from "../models/flag.model";
 import { FlagService } from "../services/flag.service";
-import { FlagQueryHandler } from "./flag.handler";
-import { FlagQuery } from "./flag.query";
+import { FlagToggleCommandHandler } from "./flagToggle.handler";
+import { FlagToggleCommand } from "./flagToggle.command";
+import { FlagToggleResponse } from "../flag.types";
 
 const createMockFlagData = (): Flag[] => {
   return [{
@@ -49,9 +49,9 @@ const createMockFlagData = (): Flag[] => {
 const initialiseDependencyInjection = async (): Promise<TestingModule> => {
     return await Test.createTestingModule({
       imports: [ConfigModule, HttpModule],
-providers: [
+      providers: [
         FlagService, 
-        FlagQueryHandler,
+        FlagToggleCommandHandler,
         {
           provide: LoggingService,
           useClass: MockLoggingService
@@ -67,7 +67,7 @@ describe('FlagQueryHandler (component)', () => {
   let configService: ConfigService;
   let httpClient: HttpClient;
   let loggingService: LoggingService
-  let sut: FlagQueryHandler
+  let sut: FlagToggleCommandHandler
 
   beforeEach(async () => {
     const ref = await initialiseDependencyInjection();
@@ -76,36 +76,21 @@ describe('FlagQueryHandler (component)', () => {
     configService = ref.get<ConfigService>(ConfigService);
     httpClient = ref.get<HttpClient>(HttpClient);
     loggingService = ref.get<LoggingService>(LoggingService);
-    sut = ref.get<FlagQueryHandler>(FlagQueryHandler);
+    sut = ref.get<FlagToggleCommandHandler>(FlagToggleCommandHandler);
   });
 
-  describe('enumerate', () => {
-    it('should return an array of flags', async () => {
-      const query = new FlagQuery();
-      const flagCollectionData = createMockFlagData();
-      const result: EntityModel<Flag> = {
-        items: flagCollectionData,
-        item: flagCollectionData[0]
-      };
-      jest.spyOn(httpClient, 'enumerate').mockImplementation(async _ => result);
-
-      expect(await sut.execute(query)).toBe(result.items);
-    })
-  })
-
-  describe('get', () => {
+  describe('toggle', () => {
     const flagCollectionData = createMockFlagData();
 
     it.each(flagCollectionData)('returns flag', async ({id}) => {
-      const query = new FlagQuery(id);
+      const command = new FlagToggleCommand(id);
       const flagData = flagCollectionData.find(x => x.id === id);
-      const result: EntityModel<Flag> = {
-        items: [flagData],
-        item: flagData
+      const result: FlagToggleResponse = {
+        flag: flagData
       }
-      jest.spyOn(httpClient, 'get').mockImplementation(async _ => result);
+      jest.spyOn(httpClient, 'post').mockImplementation(async _ => result);
 
-      expect(await sut.execute(query)).toBe(result.item);
+      expect(await sut.execute(command)).toBe(result.flag);
     });
   })
 });

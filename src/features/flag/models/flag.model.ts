@@ -2,7 +2,6 @@ import { Field, ObjectType } from "@nestjs/graphql";
 import { Entity } from "../../../core/models/entity";
 import { ServeValue } from './serveValue.model';
 
-
 @ObjectType()
 export class Flag extends Entity {
 

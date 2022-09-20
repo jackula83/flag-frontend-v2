@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -11,6 +11,10 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter()
   );
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true
+  }));
+
   const port = 4000;
   await app.listen(port, '0.0.0.0', () => {
     Logger.log(`Listening on port ${port}`)

@@ -11,14 +11,17 @@ export const CommandHandlers = [FlagToggleCommandHandler];
 export const QueryHandlers = [FlagQueryHandler];
 
 @Module({
-  imports: [ConfigModule, CqrsModule, CoreModule],
+  imports: [
+    ConfigModule, 
+    CqrsModule,
+    CoreModule
+  ],
   providers: [
     FlagResolver, 
     FlagService,
     ...CommandHandlers,
     ...QueryHandlers
-  ],
-  exports: [FlagService]
+  ]
 })
 
 export class FlagModule {}
