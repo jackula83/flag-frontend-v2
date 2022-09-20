@@ -4,22 +4,25 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { FlagModule } from './features/flag/flag.module';
+import { LogModule } from './features/log/log.module';
+
+const GraphQLModules = [
+  FlagModule,
+  LogModule
+];
 
 @Module({
   imports: [
-  GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), './src/schema.gql'),
-      // buildSchemaOptions: {
-      //   dateScalarMode: 'timestamp'
-      // },
       sortSchema: true,
       playground: true
     }),
     ConfigModule.forRoot({
       isGlobal: true
     }),
-    FlagModule
+    ...GraphQLModules
   ],
 })
 export class AppModule {}

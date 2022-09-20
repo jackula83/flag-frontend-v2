@@ -1,7 +1,7 @@
-import { Field, GraphQLISODateTime, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
-export abstract class AggregateRoot {
+export abstract class Entity {
 
   @Field(type => ID)
   id: number;
