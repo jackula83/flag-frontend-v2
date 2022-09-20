@@ -1,6 +1,6 @@
 import { FlagToggleCommand } from './flagToggle.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
-import { FlagService } from '../flag.service';
+import { FlagService } from '../services/flag.service';
 
 @CommandHandler(FlagToggleCommand)
 export class FlagToggleCommandHandler implements ICommandHandler<FlagToggleCommand> {

@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { EntityModel, Nullable } from '../../core/core.types';
+import { EntityModel, Nullable } from '../../../core/core.types';
 import { ConfigService } from '@nestjs/config';
-import { Flag } from './models/flag.model';
-import { HttpClient } from "../../core/http/httpClient.service";
-import { FlagToggleRequest, FlagToggleResponse } from "./flag.types";
+import { Flag } from '../models/flag.model';
+import { HttpClient } from "../../../core/http/httpClient.service";
+import { FlagToggleRequest, FlagToggleResponse } from "../flag.types";
 
 @Injectable()
 export class FlagService {
