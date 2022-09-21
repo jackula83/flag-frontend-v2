@@ -1,17 +1,17 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Entity } from "../../../core/models/entity";
-import { LogDto } from "./log.dto";
+import { LogInput } from "./log.input";
 
 
 @ObjectType()
 export class Log extends Entity {
 
-  @Field({defaultValue: LogDto.TypeInfo})
+  @Field({defaultValue: LogInput.TypeInfo})
   type: string;
   
   @Field({defaultValue: ''})
   message: string;
   
-  @Field({defaultValue: LogDto.SrcFlagFrontend})
+  @Field({defaultValue: LogInput.SrcFlagFrontend})
   source: string;
 }

@@ -2,7 +2,7 @@ import { Field, InputType } from "@nestjs/graphql";
 import { IsIn } from "class-validator";
 
 @InputType()
-export class LogDto {
+export class LogInput {
 
   public static readonly SrcFlagFrontend = 'flag-frontend';
   public static readonly SrcFlagUI = 'flag-ui';
@@ -12,13 +12,13 @@ export class LogDto {
   public static readonly TypeError = 'error';
 
   @Field()
-  @IsIn([LogDto.TypeInfo, LogDto.TypeWarning, LogDto.TypeError])
+  @IsIn([LogInput.TypeInfo, LogInput.TypeWarning, LogInput.TypeError])
   type: string;
   
   @Field()
   message: string;
   
   @Field()
-  @IsIn([LogDto.SrcFlagFrontend, LogDto.SrcFlagUI])
+  @IsIn([LogInput.SrcFlagFrontend, LogInput.SrcFlagUI])
   source: string;
 }
