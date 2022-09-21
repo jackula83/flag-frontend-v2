@@ -33,21 +33,21 @@ type Log {
   uuid: String!
 }
 
-input LogDto {
+input LogInput {
   message: String!
   source: String!
   type: String!
 }
 
 type Mutation {
-  addLog(input: LogDto!): Log!
-  toggle(id: Float!): Flag!
+  addLog(input: LogInput!): Log!
+  toggle(id: Int!): Flag!
 }
 
 type Query {
-  flag(id: Float!): Flag!
+  flag(id: Int!): Flag!
   flags: [Flag!]!
-  log(id: Float!): Log!
+  log(id: Int!): Log!
   logs: [Log!]!
 }
 

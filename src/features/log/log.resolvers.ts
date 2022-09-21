@@ -3,9 +3,7 @@ import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { AddLogCommand } from "./cqrs/addLog.command";
 import { Log } from './models/log.model';
 import { LogQuery } from './cqrs/log.query';
-import { AddLogRequest } from "./log.decorator";
-import { Body } from "@nestjs/common";
-import { LogDto } from "./models/log.dto";
+import { LogInput } from "./models/log.input";
 
 @Resolver(of => Log)
 export class LogResolver {
@@ -20,13 +18,13 @@ export class LogResolver {
   }
 
   @Query(returns => Log)
-  async log(@Args('id') id: number) {
+  async log(@Args('id', { type: () => Int }) id: number) {
     return this.queryBus.execute(new LogQuery(id));
   }
 
   @Mutation(returns => Log)
   async addLog(
-    @Args('input') input: LogDto) {
+    @Args('input') input: LogInput) {
     return this.commandBus.execute(new AddLogCommand(
       input.message,
       input.type,

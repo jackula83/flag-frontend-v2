@@ -17,12 +17,12 @@ export class FlagResolver {
   }
 
   @Query(returns => Flag)
-  async flag(@Args('id') id: number) {
+  async flag(@Args('id', { type: () => Int }) id: number) {
     return this.queryBus.execute(new FlagQuery(id));
   }
 
   @Mutation(returns => Flag)
-  async toggle(@Args('id',) id: number) {
+  async toggle(@Args('id', { type: () => Int }) id: number) {
     return this.commandBus.execute(new FlagToggleCommand(id));
   }
 }
