@@ -6,8 +6,12 @@ import { FlagService } from './services/flag.service';
 import { CoreModule } from '../../core/core.module';
 import { FlagToggleCommandHandler } from "./cqrs/flagToggle.handler";
 import { FlagQueryHandler } from "./cqrs/flag.handler";
+import { AddFlagCommandHandler } from "./cqrs/addFlag.handler";
 
-export const CommandHandlers = [FlagToggleCommandHandler];
+export const CommandHandlers = [
+  AddFlagCommandHandler,
+  FlagToggleCommandHandler
+];
 export const QueryHandlers = [FlagQueryHandler];
 
 @Module({

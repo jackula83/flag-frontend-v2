@@ -34,6 +34,16 @@ export class FlagService {
     return results?.item;
   }
 
+  public async add(flag: Flag): Promise<Nullable<Flag>> {
+    flag.id = 0;
+    const entityModel: EntityModel<Flag> = {
+      item: flag,
+      items: [flag]
+    };
+    const results = await this.httpClient.post<EntityModel<Flag>>(this.entityUrl, entityModel);
+    return results?.item;
+  }
+
   public async toggle(id: number): Promise<Nullable<Flag>> {
     const payload: FlagToggleRequest = {
       flagId: id
