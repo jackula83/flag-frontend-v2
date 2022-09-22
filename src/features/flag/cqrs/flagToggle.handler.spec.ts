@@ -62,7 +62,7 @@ const initialiseDependencyInjection = async (): Promise<TestingModule> => {
     }).compile();
 }
 
-describe('FlagQueryHandler (component)', () => {
+describe('FlagToggleHandler (component)', () => {
   let flagService: FlagService;
   let configService: ConfigService;
   let httpClient: HttpClient;

@@ -11,6 +11,7 @@ import { Flag } from "../models/flag.model";
 import { FlagService } from "../services/flag.service";
 import { FlagQueryHandler } from "./flag.handler";
 import { FlagQuery } from "./flag.query";
+import { nameof } from "ts-simple-nameof";
 
 const createMockFlagData = (): Flag[] => {
   return [{
