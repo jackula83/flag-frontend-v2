@@ -11,7 +11,6 @@ export class AddFlagCommandHandler implements ICommandHandler<AddFlagCommand> {
     const flag = new Flag();
     flag.name = command.name;
     flag.description = command.description;
-    console.log('addFlag flag obj: ', flag)
     return this.flagService.add(flag);
   }
 }

@@ -13,7 +13,7 @@ export abstract class Entity {
   @Field({defaultValue: false})
   deleteFlag: boolean;
 
-  @Field({defaultValue: Date.UTC})
+  @Field({defaultValue: new Date()})
   createdAt: Date;
 
   @Field({nullable: true})
