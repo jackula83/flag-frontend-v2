@@ -16,6 +16,12 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@flagcar/types": ["src/types.ts"],
+      "@flagcar/core/*": ["src/core/*"],
+      "@flagcar/features/*": ["src/features/*"],
+      "@flagcar/fakes/*": ["src/fakes/*"]
+    }
   }
 }

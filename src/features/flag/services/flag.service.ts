@@ -1,20 +1,22 @@
 import { Injectable } from "@nestjs/common";
-import { EntityModel, Nullable } from '../../../core/core.types';
+import { Nullable } from '../../../core/core.types';
 import { ConfigService } from '@nestjs/config';
 import { Flag } from '../models/flag.model';
 import { HttpClient } from "../../../core/http/httpClient.service";
 import { FlagToggleRequest, FlagToggleResponse } from "../flag.types";
+import { FxEntityService } from "../../../core/fx/fxentity.service";
 
 @Injectable()
-export class FlagService {
+export class FlagService extends FxEntityService<Flag> {
 
-  private entityUrl: string;
   private flagUrl: string;
+  protected entityUrl: string;
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly httpClient: HttpClient
+    protected readonly httpClient: HttpClient
   ) {
+    super(httpClient);
     const flagServiceUrl = process.env.FlagService__Url 
       ?? this.configService.get<string>('FLAGSERVICE_URL');
     const flagServicePort = process.env.FlagService__Port
@@ -22,26 +24,6 @@ export class FlagService {
     const baseUrl = `http://${flagServiceUrl}:${flagServicePort}/api`;
     this.entityUrl = `${baseUrl}/flagEntity`;
     this.flagUrl = `${baseUrl}/flag`;
-  }
-
-  public async enumerate(): Promise<Flag[]> {
-    const results = await this.httpClient.enumerate<EntityModel<Flag>>(this.entityUrl);
-    return results?.items;
-  }
-
-  public async get(id: number): Promise<Nullable<Flag>> {
-    const results = await this.httpClient.get<EntityModel<Flag>>(this.entityUrl, id);
-    return results?.item;
-  }
-
-  public async add(flag: Flag): Promise<Nullable<Flag>> {
-    flag.id = 0;
-    const entityModel: EntityModel<Flag> = {
-      item: flag,
-      items: [flag]
-    };
-    const results = await this.httpClient.post<EntityModel<Flag>>(this.entityUrl, entityModel);
-    return results?.item;
   }
 
   public async toggle(id: number): Promise<Nullable<Flag>> {

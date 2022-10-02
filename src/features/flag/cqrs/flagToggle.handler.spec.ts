@@ -1,16 +1,16 @@
 import { HttpModule } from "@nestjs/axios";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
-import { uuid4 } from '@sentry/utils';
-import { HttpClient } from '../../../core/http/httpClient.service';
-import { LoggingService } from "../../../core/logging/logging.service";
-import { MockHttpClient } from "../../../fakes/mockHttpClient";
-import { MockLoggingService } from "../../../fakes/mockLoggingService";
+import { uuid4 } from "@sentry/utils";
+import { FlagToggleResponse } from "@flagcar/types";
+import { HttpClient } from "@flagcar/core/http/httpClient.service";
+import { LoggingService } from "@flagcar/core/logging/logging.service";
+import { MockHttpClient } from "@flagcar/fakes/mockHttpClient";
+import { MockLoggingService } from "@flagcar/fakes/mockLoggingService";
 import { Flag } from "../models/flag.model";
 import { FlagService } from "../services/flag.service";
 import { FlagToggleCommandHandler } from "./flagToggle.handler";
 import { FlagToggleCommand } from "./flagToggle.command";
-import { FlagToggleResponse } from "../flag.types";
 
 const createMockFlagData = (): Flag[] => {
   return [{
@@ -63,19 +63,12 @@ const initialiseDependencyInjection = async (): Promise<TestingModule> => {
 }
 
 describe('FlagToggleHandler (component)', () => {
-  let flagService: FlagService;
-  let configService: ConfigService;
   let httpClient: HttpClient;
-  let loggingService: LoggingService
   let sut: FlagToggleCommandHandler
 
   beforeEach(async () => {
     const ref = await initialiseDependencyInjection();
-
-    flagService = ref.get<FlagService>(FlagService);
-    configService = ref.get<ConfigService>(ConfigService);
     httpClient = ref.get<HttpClient>(HttpClient);
-    loggingService = ref.get<LoggingService>(LoggingService);
     sut = ref.get<FlagToggleCommandHandler>(FlagToggleCommandHandler);
   });
 

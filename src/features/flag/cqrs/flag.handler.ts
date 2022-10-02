@@ -1,5 +1,5 @@
-import { FlagQuery } from './flag.query';
 import { QueryHandler, IQueryHandler } from '@nestjs/cqrs'
+import { FlagQuery } from './flag.query';
 import { FlagService } from '../services/flag.service';
 
 @QueryHandler(FlagQuery)

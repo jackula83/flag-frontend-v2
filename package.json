@@ -83,6 +83,12 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@flagcar/types": "<rootDir>/types.ts",
+      "@flagcar/core/(.*)": "<rootDir>/core/$1",
+      "@flagcar/features/(.*)": "<rootDir>/features/$1",
+      "@flagcar/fakes/(.*)": "<rootDir>/fakes/$1"
+    }
   }
 }

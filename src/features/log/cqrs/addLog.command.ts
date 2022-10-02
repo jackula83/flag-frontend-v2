@@ -1,5 +1,3 @@
-import { Log } from './../models/log.model';
-
 export class AddLogCommand {
   constructor(
     public readonly message: string,

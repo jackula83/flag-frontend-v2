@@ -1,20 +1,22 @@
 import { HttpModule } from '@nestjs/axios';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule, } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { EntityModel } from 'src/core/core.types';
-import { HttpClient } from '../../../core/http/httpClient.service';
-import { LoggingService } from "../../../core/logging/logging.service";
-import { MockHttpClient } from "../../../fakes/mockHttpClient";
-import { MockLoggingService } from "../../../fakes/mockLoggingService";
+import { uuid4 } from '@sentry/utils';
+import { EntityModel } from '@flagcar/types';
+import { HttpClient } from '@flagcar/core/http/httpClient.service';
+import { LoggingService } from "@flagcar/core/logging/logging.service";
+import { MockHttpClient } from "@flagcar/fakes/mockHttpClient";
+import { MockLoggingService } from "@flagcar/fakes/mockLoggingService";
 import { Flag } from '../models/flag.model';
 import { FlagService } from '../services/flag.service';
 import { AddFlagCommand } from './addFlag.command';
 import { AddFlagCommandHandler } from './addFlag.handler';
-import { uuid4 } from '@sentry/utils';
 
 const initialiseDependencyInjection = async (): Promise<TestingModule> => {
     return await Test.createTestingModule({
-      imports: [ConfigModule, HttpModule],
+      imports: [
+        ConfigModule, 
+        HttpModule],
       providers: [
         FlagService,
         AddFlagCommandHandler,
@@ -45,19 +47,12 @@ const createFlagData = (name: string, description: string): Flag => {
 }
 
 describe('AddFlagCommandHandler (component)', () => { 
-  let flagService: FlagService;
-  let configService: ConfigService;
   let httpClient: HttpClient;
-  let loggingService: LoggingService
   let sut: AddFlagCommandHandler
 
   beforeEach(async () => {
     const ref = await initialiseDependencyInjection();
-
-    flagService = ref.get<FlagService>(FlagService);
-    configService = ref.get<ConfigService>(ConfigService);
     httpClient = ref.get<HttpClient>(HttpClient);
-    loggingService = ref.get<LoggingService>(LoggingService);
     sut = ref.get<AddFlagCommandHandler>(AddFlagCommandHandler);
   });
   

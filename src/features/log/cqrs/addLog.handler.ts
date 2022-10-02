@@ -1,5 +1,5 @@
-import { AddLogCommand } from './addLog.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
+import { AddLogCommand } from './addLog.command';
 import { Log } from './../models/log.model';
 
 @CommandHandler(AddLogCommand)

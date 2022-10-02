@@ -1,7 +1,6 @@
 import { HttpModule } from "@nestjs/axios";
-import { Global, Module, ValidationPipe } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { APP_PIPE } from "@nestjs/core";
 import { BasicHttpClient } from "./http/basicHttpClient.service";
 import { HttpClient } from "./http/httpClient.service";
 import { LoggingService } from "./logging/logging.service";
@@ -23,7 +22,7 @@ import { DateScalar } from './scalars/date.scalars';
   },
   DateScalar],
   exports: [
-    LoggingService, 
+    LoggingService,
     HttpClient]
 })
 
