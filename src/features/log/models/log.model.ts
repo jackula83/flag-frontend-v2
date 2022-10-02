@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { Entity } from "../../../core/models/entity";
+import { Entity } from "@flagcar/core/models/entity";
 import { LogInput } from "./log.input";
 
 

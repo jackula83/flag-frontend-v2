@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { AxiosResponse } from 'axios';
-import { firstValueFrom } from 'rxjs';
-import { LoggingService } from '../logging/logging.service';
-import { Nullable } from '../core.types';
+import { Injectable } from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
+import { AxiosResponse } from "axios";
+import { firstValueFrom } from "rxjs";
+import { LoggingService } from "../logging/logging.service";
+import { Nullable } from "@flagcar/types";
 
 @Injectable()
 export abstract class HttpClient {

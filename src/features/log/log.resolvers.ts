@@ -1,8 +1,8 @@
 import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { AddLogCommand } from "./cqrs/addLog.command";
-import { Log } from './models/log.model';
 import { LogQuery } from './cqrs/log.query';
+import { Log } from './models/log.model';
 import { LogInput } from "./models/log.input";
 
 @Resolver(of => Log)

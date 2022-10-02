@@ -1,17 +1,17 @@
 import { HttpModule } from '@nestjs/axios';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Test, TestingModule } from '@nestjs/testing';
-import { EntityModel } from 'src/core/core.types';
-import { HttpClient } from '../../../core/http/httpClient.service';
-import { LoggingService } from "../../../core/logging/logging.service";
-import { MockHttpClient } from "../../../fakes/mockHttpClient";
-import { MockLoggingService } from "../../../fakes/mockLoggingService";
-import { Flag } from '../models/flag.model';
-import { FlagService } from '../services/flag.service';
-import { uuid4 } from '@sentry/utils';
-import { UpdateFlagCommandHandler } from './updateFlag.handler';
-import { UpdateFlagCommand } from './updateFlag.command';
-import { NotFoundException } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { NotFoundException } from "@nestjs/common";
+import { Test, TestingModule } from "@nestjs/testing";
+import { uuid4 } from "@sentry/utils";
+import { EntityModel } from "@flagcar/types";
+import { HttpClient } from "@flagcar/core/http/httpClient.service";
+import { LoggingService } from "@flagcar/core/logging/logging.service";
+import { MockHttpClient } from "@flagcar/fakes/mockHttpClient";
+import { MockLoggingService } from "@flagcar/fakes/mockLoggingService";
+import { Flag } from "../models/flag.model";
+import { FlagService } from "../services/flag.service";
+import { UpdateFlagCommandHandler } from "./updateFlag.handler";
+import { UpdateFlagCommand } from "./updateFlag.command";
 
 const initialiseDependencyInjection = async (): Promise<TestingModule> => {
     return await Test.createTestingModule({

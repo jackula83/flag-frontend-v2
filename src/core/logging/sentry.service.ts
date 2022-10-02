@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import { Injectable } from "@nestjs/common";
-import { ConsoleStyle } from '../console/consoleStyles';
 import { ConfigService } from '@nestjs/config';
+import { ConsoleStyle } from '../console/consoleStyles';
 import { LoggingService } from './logging.service';
 
 @Injectable()

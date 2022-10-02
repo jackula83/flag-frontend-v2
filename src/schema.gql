@@ -49,6 +49,7 @@ type Mutation {
   addLog(input: LogInput!): Log!
   toggle(id: Int!): Flag!
   toggleFlag(id: Int!): Flag!
+  updateFlag(updateFlag: UpdateFlagInput!): Flag!
 }
 
 type Query {
@@ -60,4 +61,11 @@ type Query {
 
 type ServeValue {
   state: Boolean!
+}
+
+input UpdateFlagInput {
+  defaultServeValue: Boolean!
+  description: String!
+  id: Float!
+  isEnabled: Boolean = false
 }

@@ -1,4 +1,4 @@
-import { EntityModel, Nullable } from "../core.types";
+import { EntityModel, Nullable } from "@flagcar/types";
 import { HttpClient } from "../http/httpClient.service";
 import { Entity } from "../models/entity";
 

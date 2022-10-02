@@ -1,5 +1,3 @@
-import { Flag } from "../models/flag.model";
-
 export class UpdateFlagCommand {
   constructor(
     public readonly id: number,
