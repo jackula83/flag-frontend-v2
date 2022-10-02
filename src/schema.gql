@@ -47,6 +47,7 @@ input LogInput {
 type Mutation {
   addFlag(flagHeader: FlagHeaderInput!): Flag!
   addLog(input: LogInput!): Log!
+  toggle(id: Int!): Flag!
   toggleFlag(id: Int!): Flag!
 }
 

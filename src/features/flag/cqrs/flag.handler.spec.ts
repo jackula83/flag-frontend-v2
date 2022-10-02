@@ -50,7 +50,7 @@ const createMockFlagData = (): Flag[] => {
 const initialiseDependencyInjection = async (): Promise<TestingModule> => {
     return await Test.createTestingModule({
       imports: [ConfigModule, HttpModule],
-providers: [
+      providers: [
         FlagService, 
         FlagQueryHandler,
         {
@@ -64,19 +64,12 @@ providers: [
 }
 
 describe('FlagQueryHandler (component)', () => {
-  let flagService: FlagService;
-  let configService: ConfigService;
   let httpClient: HttpClient;
-  let loggingService: LoggingService
   let sut: FlagQueryHandler
 
   beforeEach(async () => {
     const ref = await initialiseDependencyInjection();
-
-    flagService = ref.get<FlagService>(FlagService);
-    configService = ref.get<ConfigService>(ConfigService);
     httpClient = ref.get<HttpClient>(HttpClient);
-    loggingService = ref.get<LoggingService>(LoggingService);
     sut = ref.get<FlagQueryHandler>(FlagQueryHandler);
   });
 

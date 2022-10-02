@@ -5,6 +5,7 @@ import { FlagQuery } from './cqrs/flag.query';
 import { FlagToggleCommand } from './cqrs/flagToggle.command';
 import { FlagHeaderInput } from "./models/flagHeader.input";
 import { AddFlagCommand } from './cqrs/addFlag.command';
+import { UpdateFlagInput } from "./models/updateFlag.input";
 
 @Resolver(of => Flag)
 export class FlagResolver {
@@ -27,6 +28,11 @@ export class FlagResolver {
   async addFlag(@Args('flagHeader') flagHeader: FlagHeaderInput) {
     const {name, description} = flagHeader;
     return this.commandBus.execute(new AddFlagCommand(name, description));
+  }
+
+  @Mutation(returns => Flag)
+  async updateFlag(@Args('updateFlag') flagInput: UpdateFlagInput) {
+    
   }
 
   @Mutation(returns => Flag)

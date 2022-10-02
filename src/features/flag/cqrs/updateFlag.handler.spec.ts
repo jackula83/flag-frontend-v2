@@ -8,9 +8,10 @@ import { MockHttpClient } from "../../../fakes/mockHttpClient";
 import { MockLoggingService } from "../../../fakes/mockLoggingService";
 import { Flag } from '../models/flag.model';
 import { FlagService } from '../services/flag.service';
-import { AddFlagCommand } from './addFlag.command';
-import { AddFlagCommandHandler } from './addFlag.handler';
 import { uuid4 } from '@sentry/utils';
+import { UpdateFlagCommandHandler } from './updateFlag.handler';
+import { UpdateFlagCommand } from './updateFlag.command';
+import { NotFoundException } from '@nestjs/common';
 
 const initialiseDependencyInjection = async (): Promise<TestingModule> => {
     return await Test.createTestingModule({
@@ -19,7 +20,7 @@ const initialiseDependencyInjection = async (): Promise<TestingModule> => {
         HttpModule],
       providers: [
         FlagService,
-        AddFlagCommandHandler,
+        UpdateFlagCommandHandler,
         {
           provide: LoggingService,
           useClass: MockLoggingService
@@ -30,10 +31,10 @@ const initialiseDependencyInjection = async (): Promise<TestingModule> => {
     }).compile();
 }
 
-const createFlagData = (name: string, description: string): Flag => {
+const createFlagTemplate = (): Flag => {
   return {
-    name,
-    description,
+    name: '',
+    description: '',
     alias: '',
     isEnabled: false,
     defaultServeValue: {
@@ -46,28 +47,53 @@ const createFlagData = (name: string, description: string): Flag => {
   };
 }
 
-describe('AddFlagCommandHandler (component)', () => { 
+const createFlagData = (command: UpdateFlagCommand): Flag => {
+  const flagData = createFlagTemplate();
+  flagData.id = command.id;
+  flagData.description = command.description;
+  flagData.defaultServeValue.state = command.defaultServeValue;
+  flagData.isEnabled = command.isEnabled;
+  return flagData;
+}
+
+describe('UpdateFlagCommandHandler (component)', () => { 
   let httpClient: HttpClient;
-  let sut: AddFlagCommandHandler
+  let sut: UpdateFlagCommandHandler
 
   beforeEach(async () => {
     const ref = await initialiseDependencyInjection();
     httpClient = ref.get<HttpClient>(HttpClient);
-    sut = ref.get<AddFlagCommandHandler>(AddFlagCommandHandler);
+    sut = ref.get<UpdateFlagCommandHandler>(UpdateFlagCommandHandler);
   });
   
-  describe('addFlag', () => { 
-    it('should add a flag and return the added flag', async () => {
-      const command = new AddFlagCommand('a', 'b');
-      const flagData = createFlagData(command.name, command.description);
+  describe('updateFlag', () => { 
+    it('should update the flag and return the updated flag', async () => {
+      const command = new UpdateFlagCommand(1, 'a', true, true)
+      const flagData = createFlagData(command);
       const httpResult: EntityModel<Flag> = {
         items: [flagData],
         item: flagData
       }
       jest.spyOn(httpClient, 'post').mockImplementation(async _ => httpResult);
+      jest.spyOn(httpClient, 'get').mockImplementation(async _ => httpResult);
 
       const result = await sut.execute(command);
       expect(result).toBe(httpResult.item);
-    })
+    });
+
+    it('should throw exception if flag doesnt exist', async () => {
+      const command = new UpdateFlagCommand(1, 'a', true, true)
+      const flagData = createFlagData(command);
+      const httpResult: EntityModel<Flag> = {
+        items: [flagData],
+        item: flagData
+      }
+      jest.spyOn(httpClient, 'post').mockImplementation(async _ => httpResult);
+      jest.spyOn(httpClient, 'get').mockImplementation(async _ => null);
+
+      await expect(sut.execute(command))
+      .rejects
+      .toThrow(NotFoundException);
+    });
   })
 })
